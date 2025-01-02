@@ -1,0 +1,59 @@
+class Solution {
+    public int incremovableSubarrayCount(int[] nums) {
+        int ans = 1; 
+        int i = 0, j = 0; 
+        for(int size = 1; size<nums.length;){
+            boolean inc = true; 
+            if(i==0){
+                for(int a = j+1; a<nums.length-1; a++){
+                    if(nums[a]>=nums[a+1]){
+                        inc = false; 
+                        break; 
+                    }
+                }
+            }else if(j==nums.length-1){
+                for(int a = 0; a<i-1; a++){
+                    if(nums[a]>=nums[a+1]){
+                        inc = false; 
+                        break; 
+                    }
+                }
+            }else{
+                int a = 0; 
+                for(a = 0; a<i-1; a++){
+                    if(nums[a]>=nums[a+1]){
+                        inc = false; 
+                        break; 
+                    }
+                }
+
+                if(nums[i-1]>=nums[j+1]){
+                    inc = false; 
+                }
+
+                for(a = j+1; a<nums.length-1; a++){
+                    if(nums[a]>=nums[a+1]){
+                        inc = false; 
+                        break; 
+                    }
+                }
+            }
+
+            if(inc){
+                ans++; 
+            }
+
+            if(j==nums.length-1){
+                size++; 
+                i = 0; 
+                j = i+size-1; 
+            }else{
+                i++; 
+                j++; 
+            }
+
+
+        }
+        return ans; 
+    }
+}

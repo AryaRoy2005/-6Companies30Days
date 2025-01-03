@@ -1,0 +1,54 @@
+class Solution {
+    public long minimumCost(String source, String target, char[] o, char[] c, int[] cost) {
+        long mat[][] = new long[26][26]; 
+
+        long m = Long.MAX_VALUE; 
+
+        for(long arr[]: mat){
+            Arrays.fill(arr, m); 
+        }
+
+        for(int i=0; i<26; i++) mat[i][i] = 0;
+
+        for(int i = 0; i<o.length; i++){
+            mat[o[i]-97][c[i]-97] = Math.min(cost[i], mat[o[i]-97][c[i]-97]); 
+        }
+
+        for(int i = 0; i<26; i++){
+            for(int j = 0; j<26; j++){
+                if(i==j){
+                    continue;
+                }
+                if(mat[j][i]==m){
+                    continue; 
+                }
+
+                long x = mat[j][i]; 
+                for(int k = 0; k<26; k++){
+                    if(mat[i][k]==m){
+                        continue; 
+                    }
+
+                    if(x+mat[i][k]<mat[j][k]){
+                        mat[j][k] = x+mat[i][k]; 
+                    }
+                }
+            }
+        }
+
+        long ans = 0; 
+
+        char s[] = source.toCharArray(); 
+        char t[] = target.toCharArray(); 
+
+        for(int i = 0; i<s.length; i++){
+            if(mat[s[i]-97][t[i]-97]==m){
+                return -1; 
+            }else{
+                ans+=mat[s[i]-97][t[i]-97];
+            }
+        }
+
+        return ans; 
+    }
+}

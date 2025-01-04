@@ -1,0 +1,63 @@
+class Solution {
+    public int findTheCity(int n, int[][] edges, int distanceThreshold) {
+        int dt[][] = new int[n][n]; 
+        
+        for(int i = 0; i<edges.length; i++){
+            dt[edges[i][0]][edges[i][1]] = edges[i][2]; 
+            dt[edges[i][1]][edges[i][0]] = edges[i][2]; 
+        }
+
+        
+
+        for(int i = 0; i<n; i++){
+            for(int j = 0; j<n; j++){
+                if(i==j){
+                    continue; 
+                }
+                if(dt[j][i]==0){
+                    continue;
+                }
+                for(int k = 0; k<n; k++){
+                    if(dt[i][k]==0){
+                        continue; 
+                    }
+
+                    if(dt[j][k]==0){
+                        dt[j][k] = dt[j][i] + dt[i][k]; 
+                    }else{
+                        dt[j][k] = Math.min(dt[j][k], dt[j][i] + dt[i][k]); 
+                    }
+                }
+            }
+        }
+
+        // for(int i = 0; i<n; i++){
+        //     for(int j = 0; j<n; j++){
+        //         System.out.print(dt[i][j]+" "); 
+        //     }
+        //     System.out.println(); 
+        // }
+
+        for(int i = 0; i<n; i++){
+            dt[i][i] = 0;
+        }
+
+        int ans = 0; 
+        int low = Integer.MAX_VALUE; 
+
+        for(int i = 0; i<n; i++){
+            int count = 0; 
+            for(int j = 0; j<n; j++){
+                if(dt[i][j]<=distanceThreshold){
+                    count++; 
+                }
+            }
+            if(count<=low){
+                low = count; 
+                ans = i; 
+            }
+        }
+
+        return ans; 
+    }
+}

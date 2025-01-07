@@ -1,0 +1,49 @@
+class Solution {
+    public String convertToTitle(int c) {
+        long k = 0, p = 0; 
+
+        while(k<c){
+            p++; 
+            k += Math.pow(26, p); 
+        }
+
+        if(k==c){
+            StringBuilder ans = new StringBuilder(); 
+            while(p>0){
+                ans.append("Z"); 
+                p--; 
+            }
+            return ans.toString(); 
+        }
+
+        k -= Math.pow(26, p); 
+        p--; 
+
+        c -= k; 
+
+        StringBuilder ans = new StringBuilder(); 
+
+        while(p>0){
+            int a = (int) (c/Math.pow(26, p)); 
+            c = (int) (c%Math.pow(26, p)); 
+            p--; 
+
+            if(c==0){
+                ans.append(""+(char)(65+a-1)); 
+            }else{
+                ans.append(""+(char)(65+a));
+            } 
+        }
+
+        
+        if(c==0){
+            ans.append("Z");
+        }else{
+            ans.append(""+(char)(65+c-1));
+        }
+
+
+
+        return ans.toString(); 
+    }
+}

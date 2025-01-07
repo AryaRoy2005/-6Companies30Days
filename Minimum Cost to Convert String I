@@ -2,7 +2,7 @@ class Solution {
     public long minimumCost(String source, String target, char[] o, char[] c, int[] cost) {
         long mat[][] = new long[26][26]; 
 
-        long m = Long.MAX_VALUE; 
+        long m = Long.MAX_VALUE;  
 
         for(long arr[]: mat){
             Arrays.fill(arr, m); 

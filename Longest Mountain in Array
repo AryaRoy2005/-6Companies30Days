@@ -1,0 +1,36 @@
+class Solution {
+    public int longestMountain(int[] arr) {
+        int i = 0, j = 0, n = arr.length, ans = 0; 
+
+        while(j<n-1){ 
+
+            while(j<n-1&&arr[j]>=arr[j+1]){
+                j++; 
+            }
+
+            i = j; 
+
+            while(j<n-1&&arr[j]<arr[j+1]){
+                j++; 
+            }
+
+            if(j==n-1){
+                return ans; 
+            }
+
+            if(arr[j]!=arr[j+1]){
+                while(j<n-1&&arr[j]>arr[j+1]){
+                    j++; 
+                }
+
+                ans = Math.max(ans, j-i+1); 
+            }
+
+            i=j; 
+
+        }
+
+        return ans; 
+
+    }
+}

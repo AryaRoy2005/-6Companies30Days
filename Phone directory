@@ -1,0 +1,57 @@
+//User function Template for Java
+
+class Solution{
+    static ArrayList<ArrayList<String>> displayContacts(int n, String contact[], String s) {
+        // code here
+        ArrayList<ArrayList<String>> ans = new ArrayList<>(); 
+        
+        Arrays.sort(contact); 
+        
+        String temp = new String(); 
+        
+        boolean closed[] = new boolean[contact.length]; 
+        
+        for(int i = 0; i<s.length(); i++){
+            
+            temp+=s.charAt(i); 
+            
+            ArrayList<String> row = new ArrayList<>();
+            
+            
+            for(int j = 0; j<contact.length; j++){
+                
+                if(closed[j]){
+                    continue; 
+                }
+                
+                if(contact[j].indexOf(temp)==0){
+                    row.add(contact[j]); 
+                }else{
+                    closed[j] = true;  
+                }
+                
+                int x = j; 
+                
+                String dup = contact[j]; 
+                
+                while(j<contact.length&&contact[j].equals(dup)){
+                    if(closed[x]){
+                        closed[j] = true; 
+                    }
+                    j++; 
+                }
+                
+                j--; 
+            }
+            
+            if(!row.isEmpty()){
+                ans.add(row); 
+            }else{
+                row.add("0"); 
+                ans.add(row); 
+            }
+        }
+        
+        return ans; 
+    }
+}

@@ -1,0 +1,42 @@
+// User function template for JAVA
+
+class Solution {
+    // Function to find maximum of each subarray of size k.
+    public ArrayList<Integer> max_of_subarrays(int arr[], int k) {
+        // Your code here
+        ArrayList<Integer> ans = new ArrayList<>(); 
+        
+        int max = 0; 
+        
+        for(int i = 0; i<k; i++){
+            if(arr[i]>max){
+                max = arr[i]; 
+            } 
+        }
+        ans.add(max); 
+        
+        int i = 0, j = k; 
+        
+        while(j<arr.length){
+            if(arr[i]!=max){
+                if(arr[j]>max){
+                    max = arr[j]; 
+                } 
+                ans.add(max);
+                i++; 
+            }else{
+                i++; 
+                max = 0; 
+                for(int a = i; a<=j; a++){
+                    if(arr[a]>max){
+                        max = arr[a]; 
+                    }  
+                }
+                ans.add(max); 
+            }
+            j++; 
+        }
+        
+        return ans; 
+    }
+}

@@ -1,0 +1,55 @@
+class Solution {
+    HashMap<Integer, HashMap<Integer, HashMap<Integer, Integer>>> map = new HashMap<>();
+
+    public int helper(int i, int jump, int bs, int count, int k){
+        if(i>k+1){
+            return count; 
+        }
+
+
+        if(map.containsKey(i)){
+            if(map.get(i).containsKey(jump)){
+                if(map.get(i).get(jump).containsKey(bs)){
+                    return map.get(i).get(jump).get(bs); 
+                }
+            }
+        }
+
+        int ans = 0; 
+
+        if(i==k){
+            ans = 1; 
+        }
+
+        if(bs==0&&i!=0){
+            ans += helper(i-1, jump, 1, 0, k);
+        }
+
+        ans += helper(i+(int)Math.pow(2,jump), jump+1, 0, 0, k); 
+
+        if(map.containsKey(i)){
+            if(map.get(i).containsKey(jump)){
+                map.get(i).get(jump).put(bs, ans); 
+            }else{
+                HashMap<Integer, Integer> temp = new HashMap<>(); 
+                map.get(i).put(jump, temp); 
+                map.get(i).get(jump).put(bs, ans);
+            }
+        }else{
+            HashMap<Integer, HashMap<Integer, Integer>> temp = new HashMap<>(); 
+            map.put(i, temp); 
+            HashMap<Integer, Integer> temp2 = new HashMap<>(); 
+            map.get(i).put(jump, temp2); 
+            map.get(i).get(jump).put(bs, ans);
+        }
+
+        return ans;  
+        
+    }
+    public int waysToReachStair(int k) {
+         
+        int a = helper(1, 0, 0, 0, k); 
+        System.out.println(map); 
+        return a; 
+    }
+}

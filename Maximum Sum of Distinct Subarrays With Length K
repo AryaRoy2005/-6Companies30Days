@@ -1,0 +1,40 @@
+class Solution {
+    public long maximumSubarraySum(int[] nums, int k) {
+        int i = 0, j = 1; 
+        HashSet<Integer> map = new HashSet<>(); 
+        long sum = nums[i]; 
+        long ans = 0; 
+        map.add(nums[i]); 
+
+        while(j<nums.length){ 
+            if(j==i+k){
+                ans = Math.max(ans, sum); 
+                sum-=nums[i]; 
+                map.remove(nums[i]); 
+                i++; 
+                continue; 
+            }else{
+                if(map.contains(nums[j])){
+                    while(nums[i]!=nums[j]){
+                        i++; 
+                    }
+                    i++; 
+                    sum=nums[i]; 
+                    map.clear(); 
+                    map.add(nums[i]); 
+                    j = i+1; 
+                }else{
+                    sum+=nums[j]; 
+                    map.add(nums[j]); 
+                    j++; 
+                }
+            }
+        }
+
+        if(j==i+k){
+            ans = Math.max(ans, sum); 
+        }
+
+        return ans; 
+    }
+}

@@ -1,0 +1,77 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+
+class GraphNode{
+    int val; 
+    GraphNode left; 
+    GraphNode right; 
+    GraphNode back; 
+
+    GraphNode (int val) {
+        this.val = val; 
+    }
+}
+class Solution {
+    GraphNode infect; 
+
+    public GraphNode traverse(TreeNode root, int start){
+        if(root==null){
+            return null; 
+        }
+
+        GraphNode curr = new GraphNode(root.val); 
+
+        curr.left = traverse(root.left, start); 
+        curr.right = traverse(root.right, start); 
+
+        if(curr.left!=null){
+            curr.left.back = curr; 
+        }
+
+        if(curr.right!=null){
+            curr.right.back = curr; 
+        }
+
+        if(root.val==start){
+            infect = curr; 
+        }
+
+        return curr; 
+    }
+
+    public int helper(GraphNode root, int time, HashSet<Integer> map){
+        if(root==null){
+            return time; 
+        }
+
+        if(map.contains(root.val)){
+            return -1; 
+        }
+
+        map.add(root.val); 
+
+        int a = helper(root.left, time+1, map); 
+        int b = helper(root.right, time+1, map); 
+        int c = helper(root.back, time+1, map); 
+
+        return Math.max(a, Math.max(b,c)); 
+    }
+
+    public int amountOfTime(TreeNode root, int start) {
+        GraphNode rg = traverse(root, start); 
+        return helper(infect, -1, new HashSet<Integer>());
+    }
+}

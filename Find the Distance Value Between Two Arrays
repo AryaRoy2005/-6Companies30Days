@@ -1,0 +1,20 @@
+class Solution {
+    public boolean isValid(int a, int arr[], int d){
+        for(int b: arr){
+            if(Math.abs(b-a)<=d){
+                return false;
+            }
+        }
+        return true;
+    }
+    public int findTheDistanceValue(int[] arr1, int[] arr2, int d) {
+        int ans = 0; 
+
+        for(int i: arr1){
+            if(isValid(i, arr2, d))
+                ans++; 
+        }
+
+        return ans; 
+    }
+}

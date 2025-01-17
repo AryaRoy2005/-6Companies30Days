@@ -1,0 +1,42 @@
+class Solution {
+    
+
+    public static boolean isPalindrome(StringBuilder sb) {
+        int left = 0;
+        int right = sb.length() - 1;
+
+        while (left < right) {
+            if (sb.charAt(left) != sb.charAt(right)) {
+                return false;
+            }
+            left++;
+            right--;
+        }
+        return true;
+    }
+
+    public int helper(char s[], int i, StringBuilder a, StringBuilder b){
+       
+        if(i==s.length){
+             System.out.println(i+" "+a+" "+b);
+            if(isPalindrome(a)&&isPalindrome(b)){
+                return a.length()*b.length(); 
+            }
+            return 0; 
+        }
+
+        int opt1 = helper(s, i+1, a.append(s[i]), b);
+        a.deleteCharAt(a.length()-1);  
+
+        int opt2 = helper(s, i+1, a, b.append(s[i])); 
+        b.deleteCharAt(b.length()-1); 
+
+        int opt3 = helper(s, i+1, a, b); 
+         System.out.println(i+" "+a+" "+b);
+        return Math.max(Math.max(opt1, opt2), opt3); 
+
+    }
+    public int maxProduct(String s) {
+        return helper(s.toCharArray(), 0, new StringBuilder(), new StringBuilder()); 
+    }
+}

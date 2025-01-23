@@ -1,0 +1,30 @@
+class Solution {
+    public int minimizeSet(int div1, int div2, int cnt1, int cnt2) {
+        long left = 1, right = Integer.MAX_VALUE;
+        long lcm = lcm(div1, div2);
+
+        while (left < right) {
+            long mid = (left + right) / 2;
+            long divCnt1 = mid - mid / div1; 
+            long divCnt2 = mid - mid / div2; 
+            long divCnt3 = mid - mid / lcm;
+
+            if (divCnt1 >= cnt1 && divCnt2 >= cnt2 && divCnt3 >= cnt1 + cnt2)
+                right = mid;
+            else
+                left = mid + 1;
+        }
+        return (int)left;
+    }
+
+    private long lcm(long div1, long div2) {
+        long gcd = gcd(div1, div2);
+        return (div1 * div2) / gcd;
+    }
+
+    private long gcd(long div1, long div2) {
+        if (div2 == 0)
+            return div1;
+        return gcd(div2, div1 % div2);
+    }
+}

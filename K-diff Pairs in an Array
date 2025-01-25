@@ -1,0 +1,47 @@
+class Solution {
+    private int abs(int a){
+        if(a<0){
+            return 0-a; 
+        }
+        return a; 
+    }
+    public int findPairs(int[] nums, int k) {
+
+        Arrays.sort(nums); 
+
+        int i = 0, j = 1, ans = 0; 
+
+        while(j<nums.length){
+            while(j<nums.length&&abs(nums[j]-nums[i])<k){
+                j++; 
+            }
+
+            if(j==nums.length){
+                break; 
+            }
+
+            if(abs(nums[j]-nums[i])==k){
+                ans++; 
+                while(j<nums.length&&abs(nums[j]-nums[i])==k){
+                    j++; 
+                }
+            }
+
+            if(j==nums.length){
+                break; 
+            }
+
+            while(i<j&&abs(nums[j]-nums[i])>k){
+                i++; 
+            }
+
+            if(i==j){
+                j++; 
+            }
+
+
+        }
+
+        return ans; 
+    }
+}

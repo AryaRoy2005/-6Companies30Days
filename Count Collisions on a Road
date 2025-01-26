@@ -1,0 +1,25 @@
+class Solution {
+    public int countCollisions(String directions) {
+        char[] arr = directions.toCharArray(); 
+
+        int i = 0; 
+        while(i<arr.length&&arr[i]=='L'){
+            i++; 
+        }
+
+        int j = arr.length-1; 
+        while(j>-1&&arr[j]=='R'){
+            j--; 
+        }
+
+        int c = 0; 
+        for(int a = i; a<=j; a++){
+            if(arr[a]=='S'){
+                continue; 
+            }
+            c++; 
+        }
+
+        return c; 
+    }
+}

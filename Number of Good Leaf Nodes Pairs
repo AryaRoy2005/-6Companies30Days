@@ -1,0 +1,65 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+
+    public ArrayList<Integer> helper(TreeNode root, int depth, ArrayList<Integer> arr){
+        if(root==null){
+            return arr; 
+        }
+
+        if(root.left==null&&root.right==null){
+            arr.add(depth); 
+            return arr; 
+        }
+
+        arr = helper(root.left, depth+1, arr); 
+        arr = helper(root.right, depth+1, arr);
+
+        // System.out.println(arr);  
+
+        return arr; 
+    }
+    public int countPairs(TreeNode root, int distance) {
+        if(root==null){
+            return 0; 
+        }
+
+        int ans = 0; 
+
+        ans+=countPairs(root.left, distance); 
+
+        ans+=countPairs(root.right, distance);
+
+        ArrayList<Integer> left = helper(root.left, 1, new ArrayList<Integer>()); 
+
+        ArrayList<Integer> right = helper(root.right, 1, new ArrayList<Integer>()); 
+
+        // System.out.println(left);
+        // System.out.println(right);
+
+        for(int i = 0; i<left.size(); i++){
+            for(int j = 0; j<right.size(); j++){
+                if(left.get(i)+right.get(j)<=distance){
+                    ans++; 
+                }
+            }
+        }
+
+         
+
+        return ans; 
+    }
+}

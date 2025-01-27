@@ -1,0 +1,39 @@
+class Solution {
+    public int[] smallestTrimmedNumbers(String[] nums, int[][] queries) {
+        int[] ans = new int[queries.length];
+        int l = nums[0].length(); 
+
+        int in = 0; 
+
+        for(int query[]: queries){
+            int trim = l - query[1]; 
+            int k = query[0]; 
+
+            PriorityQueue<Integer> queue = new PriorityQueue<>(
+                (i, j) -> {
+                    int c = nums[i].substring(trim).compareTo(nums[j].substring(trim)); 
+                    if (c!=0) {
+                        return c; 
+                    }else{
+                        return Integer.compare(i, j); 
+                    }
+                }
+            );
+
+
+            for(int i = 0; i<nums.length; i++){
+                queue.add(i); 
+            }
+
+            while(k>1){
+                queue.poll();
+                k--; 
+            }
+
+            ans[in] = queue.peek(); 
+            in++; 
+        }
+
+        return ans; 
+    }
+}

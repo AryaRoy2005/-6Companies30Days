@@ -1,0 +1,28 @@
+class Solution {
+    public int countDistinct(int[] nums, int k, int p) {
+        HashSet<Long> map = new HashSet<>(); 
+
+        for(int i = 0; i<nums.length; i++){
+            long curr = 0; 
+            int count=0; 
+            for(int j = i; j<nums.length; j++){
+                curr = curr*199 + nums[j]; 
+                if(nums[j]%p==0){
+                    count++; 
+                }
+                if(map.contains(curr)){
+                    continue; 
+                }
+                
+                if(count<=k){
+                    map.add(curr); 
+                }
+                else{
+                    break; 
+                }
+            }
+        }
+
+        return map.size(); 
+    }
+}

@@ -1,0 +1,21 @@
+class Solution {
+    public static String encode(String s) {
+        // code here
+        StringBuilder ans = new StringBuilder(); 
+        
+        char str[] = s.toCharArray(); 
+        
+        int i = 0, j = 0; 
+        
+        while(j<str.length){
+            while(j<str.length&&str[i]==str[j]){
+                j++; 
+            }
+            ans.append(str[i]); 
+            ans.append(j-i); 
+            i=j; 
+        }
+        
+        return ans.toString(); 
+    }
+}

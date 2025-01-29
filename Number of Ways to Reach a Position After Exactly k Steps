@@ -1,0 +1,38 @@
+class Solution {
+    HashMap<Integer, HashMap<Integer,Integer>> dp; 
+
+    public int helper(int startPos, int endPos, int k){
+        if(k==0){
+            if(startPos==endPos){
+                return 1; 
+            }
+            return 0; 
+        }
+
+        if(Math.abs(startPos-endPos)>k){
+            return 0; 
+        }
+
+        if(dp.containsKey(startPos)&&dp.get(startPos).containsKey(k)){
+            return dp.get(startPos).get(k); 
+        }
+
+        int ans = ( helper(startPos-1, endPos, k-1) + helper(startPos+1, endPos, k-1) )%1000000007; 
+
+        if(dp.containsKey(startPos)){
+            dp.get(startPos).put(k, ans); 
+        }else{
+            HashMap<Integer, Integer> temp = new HashMap<>(); 
+            temp.put(k, ans); 
+            dp.put(startPos, temp); 
+        }
+
+        return ans;  
+    }
+
+    public int numberOfWays(int startPos, int endPos, int k) {
+        dp = new HashMap<>(); 
+
+        return helper(startPos, endPos, k);
+    }
+}
